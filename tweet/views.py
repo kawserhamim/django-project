@@ -32,7 +32,7 @@ def tweet_create(request):
             return redirect('tweet_list')  # ✅ added
     else:
         form = forms.TweetForm()  # ✅ added
-    return render(request, 'tweet/tweet_create.html', {'form': form})  # ✅ added
+    return render(request, 'tweet/tweet_form.html', {'form': form})  # ✅ added
 
 
 
