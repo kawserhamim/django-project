@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+
+
+{% block title %}
+    welcome project 
+{% endblock %}
+
+{% block content %}
+    <a href="{% url 'tweet_create' %}">Create Tweet</a>
+    <h1>Tweets</h1>
+{% endblock %}
