@@ -24,7 +24,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == '/' %}active{% endif %}" 
-                       href="{% url 'index1' %}">Home</a>
+                       href="/">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == '/tweets/' %}active{% endif %}" 
@@ -47,7 +47,7 @@
 <div class="container mt-4">
     {% block content %}
         <div class="text-center mt-5">
-            <h1>Welcome to TweetBar!</h1>
+            <h1><a href="/index1/" type="submit">welcome to my TWEETBAR</a> </h1>
             <p>Create, edit, and view tweets easily.</p>
         </div>
     {% endblock %}
