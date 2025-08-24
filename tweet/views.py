@@ -30,9 +30,12 @@ def tweet_edit(request, tweet_id):
         form = TweetForm(instance=tweet)
     return render(request, 'tweet/tweet_form.html', {'form': form})
 
+from django.http import HttpResponseForbidden
+
 def tweet_delete(request, tweet_id):
-    tweet = get_object_or_404(Tweet, pk=tweet_id, user=request.user)
+    tweet = get_object_or_404(Tweet, pk=tweet_id)
     if request.method == 'POST':
         tweet.delete()
         return redirect('tweet_list')
-    return render(request, 'tweet/tweet_confirm_delete.html', {'tweet': tweet})
+    # tweet.delete()
+    return HttpResponseForbidden("You are not allowed to delete this tweet.")

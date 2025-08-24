@@ -15,17 +15,25 @@ Welcome Project
         <div class="col-md-4">
             <div class="card h-100">
                 {% if tweet.photo %}
-                <img src="{{ tweet.photo.url }}" class="card-img-top" alt="error loading image">
+                    <img src="{{ tweet.photo.url }}" class="card-img-top" alt="error loading image">
                 {% else %}
-                <p style="color: brown;"class="text-center" >no photo available</p>
+                    <p class="text-center text-muted py-3">No photo available</p>
                 {% endif %}
+
                 <div class="card-body d-flex flex-column">
                     <p class="card-text" style="color: black;">
                         {{ tweet.text }}
                     </p>
-                    <div class="mt-auto">
+
+                    <div class="mt-auto d-flex">
+                        <!-- Edit button -->
                         <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary btn-sm me-2">Edit</a>
-                        <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger btn-sm">Delete</a>
+
+                        <!-- Delete form -->
+                        <form action="{% url 'tweet_delete' tweet.id %}" method="POST" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
                     </div>
                 </div>
             </div>
