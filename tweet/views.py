@@ -1,63 +1,38 @@
-from django.shortcuts import render  # ✅ added
-from django.shortcuts import redirect  # ✅ added
-from django.http import HttpResponse  # ✅ added
-from django.urls import reverse  # ✅ added
-from django.contrib.auth.models import User  # ✅ added
-from django.contrib import messages  # ✅ added
-from . import forms  # ✅ added
-from django.http import HttpResponseRedirect  # ✅ added
-from . import models  # ✅ added
-from django.shortcuts import get_object_or_404  # ✅ added
-from django.contrib.auth.decorators import login_required  # ✅ added
-from django.views.generic import ListView  # ✅ added
-from django.views.decorators.http import require_POST  # ✅ added
-from django.http import JsonResponse  # ✅ added
-from django.core.paginator import Paginator  # ✅ added
-from django.conf import settings  # ✅ added
-
+from django.shortcuts import render , get_object_or_404, redirect
+from .models import Tweet
+from .forms import TweetForm
 
 def index1(request):
-    return render(request, 'tweet/index1.html')  # ✅ no "templates/"
+    return render(request, 'tweet/index1.html')
 
 def tweet_list(request):
-    tweets = models.Tweet.objects.all().order_by('-created_at')  # ✅ added
-    return render(request, 'tweet/tweet_list.html', {'tweets': tweets})  # ✅ added
+    tweets = Tweet.objects.all().order_by('-created_at')
+    return render(request, 'tweet/tweet_list.html', {'tweets': tweets})
+
 def tweet_create(request):
     if request.method == 'POST':
-        form = forms.TweetForm(request.POST, request.FILES)  # ✅ added
+        form = TweetForm(request.POST, request.FILES)
         if form.is_valid():
-            tweet = form.save(commit=False)  # ✅ added
-            tweet.user = request.user  # ✅ added
-            tweet.save()  # ✅ added
-            return redirect('tweet_list')  # ✅ added
+            form.save()
+            return redirect('tweet_list')
     else:
-        form = forms.TweetForm()  # ✅ added
-    return render(request, 'tweet/tweet_form.html', {'form': form})  # ✅ added
-
-
-
+        form = TweetForm()
+    return render(request, 'tweet/tweet_form.html', {'form': form})
 
 def tweet_edit(request, tweet_id):
-    tweet = get_object_or_404(models.Tweet, id=tweet_id, user = request.user)  # ✅ added
+    tweet = get_object_or_404(Tweet, pk=tweet_id, user =request.user)
     if request.method == 'POST':
-        form = forms.TweetForm(request.POST, request.FILES, instance=tweet)  # ✅ added
+        form = TweetForm(request.POST, request.FILES, instance=tweet)
         if form.is_valid():
-            tweet = form.save(commit=False)  # ✅ added
-            tweet.user = request.user  # ✅ added
-            tweet.save()  # ✅ added
-            
-            return redirect('tweet_list')  # ✅ added
+            form.save()
+            return redirect('tweet_list')
     else:
-        form = forms.TweetForm(instance=tweet)  # ✅ added
-    return render(request, 'tweet/tweet_form.html', {'form': form})  # ✅ added
-
-
-
+        form = TweetForm(instance=tweet)
+    return render(request, 'tweet/tweet_form.html', {'form': form})
 
 def tweet_delete(request, tweet_id):
-    tweet = get_object_or_404(models.Tweet, id=tweet_id, user=request.user)  # ✅ added
+    tweet = get_object_or_404(Tweet, pk=tweet_id, user=request.user)
     if request.method == 'POST':
-        tweet.delete()  # ✅ added
-        messages.success(request, 'Tweet deleted successfully.')  # ✅ added
-        return redirect('tweet_list')  # ✅ added
-    return render(request, 'tweet/tweet_delete.html', {'tweet': tweet})  # ✅ added
+        tweet.delete()
+        return redirect('tweet_list')
+    return render(request, 'tweet/tweet_confirm_delete.html', {'tweet': tweet})

@@ -17,13 +17,14 @@
         {% endif %}
     </h2>
 
-    <form method="post" enctype="multipart/form-data" class="form">
-        {% csrf_token %}
-        {{ form.as_p }}
+    <form method="POST" action="{% if form.instance.pk %}{% url 'tweet_edit' form.instance.pk %}{% else %}{% url 'tweet_create' %}{% endif %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
 
-        <button type="submit" class="btn btn-primary">
-            {% if form.instance.pk %} Update {% else %} Save {% endif %}
-        </button>
-        <a href="{% url 'tweet_list' %}" class="btn btn-secondary">Cancel</a>
-    </form>
+    <button type="submit" class="btn btn-primary">
+        {% if form.instance.pk %} Update {% else %} Save {% endif %}
+    </button>
+</form>
+
+     <a href="{% url 'tweet_list' %}" class="btn btn-secondary">Cancel</a>
 {% endblock %}
