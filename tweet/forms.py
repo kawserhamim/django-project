@@ -4,4 +4,6 @@ class TweetForm(forms.ModelForm):
     class Meta:
         model = models.Tweet
         fields = ['text' , 'photo']
+
+
         

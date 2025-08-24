@@ -42,14 +42,14 @@ def tweet_edit(request, tweet_id):
     if request.method == 'POST':
         form = forms.TweetForm(request.POST, request.FILES, instance=tweet)  # ✅ added
         if form.is_valid():
-            tweet = form.save(commit=True)  # ✅ added
+            tweet = form.save(commit=False)  # ✅ added
             tweet.user = request.user  # ✅ added
             tweet.save()  # ✅ added
             
             return redirect('tweet_list')  # ✅ added
     else:
         form = forms.TweetForm(instance=tweet)  # ✅ added
-    return render(request, 'tweet/tweet_edit.html', {'form': form})  # ✅ added
+    return render(request, 'tweet/tweet_form.html', {'form': form})  # ✅ added
 
 
 
