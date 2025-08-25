@@ -32,10 +32,11 @@ def tweet_create(request):
             return redirect('tweet_list')
     else:
         form = TweetForm()
-    return render(request, 'tweet/tweet_form.html', {'form': form})
+    return render(request, 'tweet/tweet_form.html', {'form': form},{'xx':request.user.username})
 
 def tweet_edit(request, tweet_id):
     tweet = get_object_or_404(Tweet, pk=tweet_id, user = request.user)
+    xx = tweet.user.username
     if request.method == 'POST':
         form = TweetForm(request.POST, request.FILES, instance=tweet)
         if form.is_valid():

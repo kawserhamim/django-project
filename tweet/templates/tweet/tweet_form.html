@@ -16,7 +16,9 @@
             📝 Create Tweet
         {% endif %}
     </h2>
-
+    <h1>
+        if you are {{xx}} you can create a tweet
+    </h1>
     <form method="POST" action="{% if form.instance.pk %}{% url 'tweet_edit' form.instance.pk %}{% else %}{% url 'tweet_create' %}{% endif %}" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
