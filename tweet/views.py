@@ -12,6 +12,12 @@ def index1(request):
 def tweet_list(request):
     tweets = Tweet.objects.all().order_by('-created_at')
     return render(request, 'tweet/tweet_list.html', {'tweets': tweets})
+
+@login_required
+def tweet_personal_list(request):
+    tweets = Tweet.objects.all().order_by('-created_at')
+    return render(request, 'tweet/tweet_list.html', {'tweets': tweets})
+
 @login_required
 def tweet_create(request):
     if request.method == 'POST':
