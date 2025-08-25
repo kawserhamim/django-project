@@ -11,6 +11,7 @@ Welcome Project
         <a class="btn btn-primary" href="{% url 'tweet_create' %}">Create Tweet</a>
         {% if user.is_authenticated %}
             <a class="btn btn-danger ms-2" href="{% url 'logout' %}">Logout</a>
+            <a class = "btn btn-primary"style=" color : white "  href="/tweets/">loged in  {{ user.username }}</a>
         {% endif %}
     </div>
 </div>
