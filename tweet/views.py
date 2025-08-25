@@ -15,8 +15,11 @@ def tweet_list(request):
 
 @login_required
 def tweet_personal_list(request):
-    tweets = Tweet.objects.filter(user = request).order_by('-created_at')
-    return render(request, 'tweet/tweet_list.html', {'tweets': tweets})
+    tweets = Tweet.objects.filter(user = request.user).order_by('-created_at')
+    return render(request, 'tweet/tweet_personal_tweet.html', {'tweets': tweets})
+
+def alert(request):
+    return render(request, 'tweet/alert.html')
 
 @login_required
 def tweet_create(request):

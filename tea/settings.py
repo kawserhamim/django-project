@@ -102,6 +102,6 @@ MEDIA_URL = '/media/'              # URL prefix to access media files
 MEDIA_ROOT = BASE_DIR / 'media' 
 
 STATIC_URL = '/static/'  # URL prefix for static files
-LOGIN_URL = 'login'       # where @login_required sends users if not logged in
+LOGIN_URL = 'alert'       # where @login_required sends users if not logged in
 LOGIN_REDIRECT_URL = 'tweet_list'  # after login success
 LOGOUT_REDIRECT_URL = 'login'
