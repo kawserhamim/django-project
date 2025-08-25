@@ -5,25 +5,28 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .forms import SignUpForm
+from django.contrib.auth.decorators import login_required
 def index1(request):
     return render(request, 'tweet/index1.html')
-
+@login_required
 def tweet_list(request):
     tweets = Tweet.objects.all().order_by('-created_at')
     return render(request, 'tweet/tweet_list.html', {'tweets': tweets})
-
+@login_required
 def tweet_create(request):
     if request.method == 'POST':
         form = TweetForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            tweet = form.save(commit=False)
+            tweet.user = request.user  # Associate the tweet with the logged-in user
+            tweet.save()
             return redirect('tweet_list')
     else:
         form = TweetForm()
     return render(request, 'tweet/tweet_form.html', {'form': form})
 
 def tweet_edit(request, tweet_id):
-    tweet = get_object_or_404(Tweet, pk=tweet_id, user=request.user)
+    tweet = get_object_or_404(Tweet, pk=tweet_id, user = request.user)
     if request.method == 'POST':
         form = TweetForm(request.POST, request.FILES, instance=tweet)
         if form.is_valid():
@@ -36,7 +39,7 @@ def tweet_edit(request, tweet_id):
 from django.http import HttpResponseForbidden
 
 def tweet_delete(request, tweet_id):
-    tweet = get_object_or_404(Tweet, pk=tweet_id, user=request.user)
+    tweet = get_object_or_404(Tweet, pk=tweet_id, user = request.user)
     if request.method == 'POST':
         tweet.delete()
         return redirect('tweet_list')
@@ -77,4 +80,4 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     messages.info(request, "You have logged out successfully.")
-    return redirect("")
+    return redirect("/login/")
