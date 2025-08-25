@@ -9,24 +9,28 @@
 {% endblock %}
 
 {% block content %}
-    <h2 style="color: antiquewhite;">
-        {% if form.instance.pk %}
-            ✏️ Edit Tweet
-        {% else %}
-            📝 Create Tweet
-        {% endif %}
-    </h2>
-    <h1>
-        if you are {{xx}} you can create a tweet
-    </h1>
-    <form method="POST" action="{% if form.instance.pk %}{% url 'tweet_edit' form.instance.pk %}{% else %}{% url 'tweet_create' %}{% endif %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
+<div class="container mt-4">
+    <div class="card shadow-lg p-4 rounded">
+        <h2 style="color: black;">
+            {% if form.instance.pk %}
+                ✏️ Edit Tweet
+            {% else %}
+                📝 Create Tweet
+            {% endif %}
+        </h2>
+        <h1 style="color: black;">creating by {{ xx }} </h1>
+        <form method="POST" 
+              action="{% if form.instance.pk %}{% url 'tweet_edit' form.instance.pk %}{% else %}{% url 'tweet_create' %}{% endif %}" 
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            {{ form.as_p }} <!-- Replace later with styled fields -->
 
-    <button type="submit" class="btn btn-primary">
-        {% if form.instance.pk %} Update {% else %} Save {% endif %}
-    </button>
-</form>
-
-     <a href="{% url 'tweet_list' %}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">
+                {% if form.instance.pk %} Update {% else %} Save {% endif %}
+            </button>
+            <a href="{% url 'tweet_list' %}" class="btn btn-outline-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</div>
 {% endblock %}

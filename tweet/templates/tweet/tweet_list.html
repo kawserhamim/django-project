@@ -18,7 +18,7 @@ Welcome Project
     {% for tweet in tweets %}
         <div class="col-md-4">
             <div class="card h-100">
-                
+             <h1 style="color: black;">created by {{ tweet.user.username }} </h1>   
                 {% if tweet.photo %}
                     <img src="{{ tweet.photo.url }}" class="card-img-top" alt="error loading image">
                 {% else %}
